@@ -39,4 +39,16 @@ public class SpringAmqpTest {
         }
     }
 
+    /**
+     * 广播Fanout：Fanout Exchange
+     */
+    @Test
+    void testSendFanoutExchange() throws InterruptedException {
+        // 交换机名
+        String exchangeName = "hyh.fanout";
+        // 消息
+        String message = "hello, every one!";
+        // 发送消息，参数分别是：交换机名称、RoutingKey（暂时为空）、消息
+        rabbitTemplate.convertAndSend(exchangeName, "", message);
+    }
 }
