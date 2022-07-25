@@ -5,6 +5,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 // @RunWith(SpringRunner.class) // 注释掉，junit5不用加RunWith
 @SpringBootTest
 public class SpringAmqpTest {
@@ -80,5 +83,13 @@ public class SpringAmqpTest {
         String routingKey = "china.news";
         // 发送消息，参数分别是：交换机名称、RoutingKey（暂时为空）、消息
         rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
+    }
+
+    @Test
+    void testSendObjectQueue() {
+        Map<String, Object> msg = new HashMap<>();
+        msg.put("name", "刘亦菲");
+        msg.put("age", 38);
+        rabbitTemplate.convertAndSend("object.queue", msg);
     }
 }

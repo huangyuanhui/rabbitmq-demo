@@ -1,5 +1,6 @@
 package cn.itcast.mq.listener;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -8,6 +9,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
+import java.util.Map;
 
 
 @Component
@@ -130,5 +132,14 @@ public class SpringRabbitMQListener {
     ))
     public void listenTopicQueue2(String message) {
         System.err.println("消费者2接收到topic.queue2的消息【" + message + "】");
+    }
+
+    /**
+     * 消息转换器
+     * @param msg
+     */
+    @RabbitListener(queues = "object.queue")
+    public void listenObjectQueue(Map<String, Object> msg) {
+        System.out.println("接受到object.queue的消息：" + msg);
     }
 }
