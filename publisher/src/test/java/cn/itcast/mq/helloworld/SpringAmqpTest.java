@@ -66,4 +66,19 @@ public class SpringAmqpTest {
         // 发送消息，参数分别是：交换机名称、RoutingKey（暂时为空）、消息
         rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
     }
+
+    /**
+     * 话题Topic：Topic Exchange
+     */
+    @Test
+    void testSendTopicExchange() throws InterruptedException {
+        // 交换机名
+        String exchangeName = "hyh.topic";
+        // 消息
+        String message = "问天实验舱顺利升空啦!";
+        // RoutingKey
+        String routingKey = "china.news";
+        // 发送消息，参数分别是：交换机名称、RoutingKey（暂时为空）、消息
+        rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
+    }
 }

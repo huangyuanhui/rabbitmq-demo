@@ -74,7 +74,7 @@ public class SpringRabbitMQListener {
     /**
      * (在括号里 ctrl + p )
      * 路由Direct
-     *
+     * <p>
      * 运行后，会发现RabbitMQ管理平添自动创建好对应的交换机、队列、以及交换机和队列的绑定关系
      * ，也可以证明，交换机、队列、交换机和队列的绑定关系为啥更适合在消费者出声明！
      *
@@ -102,5 +102,33 @@ public class SpringRabbitMQListener {
     ))
     public void listenDirectQueue2(String message) {
         System.err.println("消费者2接收到direct.queue2的消息【" + message + "】");
+    }
+
+    /**
+     * 话题：Topic
+     *
+     * @param message
+     */
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(name = "topic.queue1"),
+            exchange = @Exchange(name = "hyh.topic", type = ExchangeTypes.TOPIC),
+            key = "china.#"
+    ))
+    public void listenTopicQueue1(String message) {
+        System.err.println("消费者1接收到topic.queue1的消息【" + message + "】");
+    }
+
+    /**
+     * 话题：Topic
+     *
+     * @param message
+     */
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(name = "topic.queue2"),
+            exchange = @Exchange(name = "hyh.topic", type = ExchangeTypes.TOPIC),
+            key = {"#.news"}
+    ))
+    public void listenTopicQueue2(String message) {
+        System.err.println("消费者2接收到topic.queue2的消息【" + message + "】");
     }
 }
