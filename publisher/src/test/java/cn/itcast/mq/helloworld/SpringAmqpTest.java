@@ -51,4 +51,19 @@ public class SpringAmqpTest {
         // 发送消息，参数分别是：交换机名称、RoutingKey（暂时为空）、消息
         rabbitTemplate.convertAndSend(exchangeName, "", message);
     }
+
+    /**
+     * 路由Direct：Direct Exchange
+     */
+    @Test
+    void testSendDirectExchange() throws InterruptedException {
+        // 交换机名
+        String exchangeName = "hyh.direct";
+        // 消息
+        String message = "hello, red!";
+        // RoutingKey
+        String routingKey = "red";
+        // 发送消息，参数分别是：交换机名称、RoutingKey（暂时为空）、消息
+        rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
+    }
 }

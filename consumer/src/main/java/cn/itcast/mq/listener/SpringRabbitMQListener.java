@@ -1,5 +1,9 @@
 package cn.itcast.mq.listener;
 
+import org.springframework.amqp.core.ExchangeTypes;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -48,19 +52,55 @@ public class SpringRabbitMQListener {
 
     /**
      * 广播Fanout：监听fanout.queue1
+     *
      * @param message
      */
     @RabbitListener(queues = "fanout.queue1")
     public void listenFanoutQueue1(String message) {
-        System.out.println("消费者1111111111接收消息【" + message +"】");
+        System.out.println("消费者1接收到fanout.queue1的消息【" + message + "】");
     }
 
     /**
      * 广播Fanout：监听fanout.queue2
+     *
      * @param message
      */
     @RabbitListener(queues = "fanout.queue2")
     public void listenFanoutQueue2(String message) {
-        System.err.println("消费者2222222222接收到消息【" + message +"】");
+        System.err.println("消费者2接收到fanout.queue2的消息【" + message + "】");
+    }
+
+
+    /**
+     * (在括号里 ctrl + p )
+     * 路由Direct
+     *
+     * 运行后，会发现RabbitMQ管理平添自动创建好对应的交换机、队列、以及交换机和队列的绑定关系
+     * ，也可以证明，交换机、队列、交换机和队列的绑定关系为啥更适合在消费者出声明！
+     *
+     * @param message
+     */
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(name = "direct.queue1"),  // 队列名（创建队列）
+            // 交换机名（创建Direct路由类型的交换机， 默认就是路由类型）
+            exchange = @Exchange(name = "hyh.direct", type = ExchangeTypes.DIRECT),
+            key = {"red", "blue"}  // RoutingKey
+    ))
+    public void listenDirectQueue1(String message) {
+        System.out.println("消费者1接收到direct.queue1的消息【" + message + "】");
+    }
+
+    /**
+     * 路由Direct
+     *
+     * @param message
+     */
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(name = "direct.queue2"),
+            exchange = @Exchange(name = "hyh.direct", type = ExchangeTypes.DIRECT),
+            key = {"red", "yellow"}
+    ))
+    public void listenDirectQueue2(String message) {
+        System.err.println("消费者2接收到direct.queue2的消息【" + message + "】");
     }
 }
