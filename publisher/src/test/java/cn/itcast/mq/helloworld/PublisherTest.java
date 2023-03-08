@@ -26,11 +26,12 @@ public class PublisherTest {
         Connection connection = factory.newConnection();
 
         // 2.创建通道Channel，这行代码执行完，管理平台上Channels界面就有新的通道被创建
+        // 创建通道可以看作是消费者或者发布者跟MQ建立连接后，消费者或者发布者跟MQ进行消息通讯的管道
         Channel channel = connection.createChannel();
 
         // 3.创建队列
         String queueName = "simple.queue";
-        // 这行代码执行完，管理平台上Queues界面就有对应的队列创建
+        // 这行代码执行完，管理平台上Queues界面就有对应的simple.queue队列创建
         channel.queueDeclare(queueName, false, false, false, null);
 
         // 4.发送消息

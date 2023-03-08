@@ -22,7 +22,7 @@ public class SpringAmqpTest {
     void testSendMessage2SimpleQueue() {
         String queueName = "simple.queue";
         String message = "hello, spring amqp";
-        // 这段代码没有队列不会自动创建
+        // 注意，要先创建队列，这段代码没有队列不会自动创建
         rabbitTemplate.convertAndSend(queueName, message);
     }
 
