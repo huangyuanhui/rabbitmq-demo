@@ -10,6 +10,11 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * 消息发送测试
+ * 1：创建连接
+ * 2：创建通道
+ * 3：创建或指定队列
+ * 4：发送消息
+ * 5：关闭资源
  */
 public class PublisherTest {
     @Test
@@ -43,6 +48,5 @@ public class PublisherTest {
         // 5.关闭通道和连接
         channel.close();
         connection.close();
-
     }
 }
